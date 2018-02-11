@@ -69,6 +69,7 @@ func renderTemplate(w http.ResponseWriter, page Page) {
 }
 
 func main() {
+	http.HandleFunc("/", convertHandler)
 	http.HandleFunc("/convert", convertHandler)
 	fmt.Println("port from main.go: " + os.Getenv("PORT"))
 	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
