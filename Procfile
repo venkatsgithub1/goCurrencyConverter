@@ -1,1 +1,1 @@
-web: goCurrencyConverter
+web: goCurrencyConverter -port=$PORT
