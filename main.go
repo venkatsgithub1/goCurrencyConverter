@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"net/http"
+	"os"
 )
 
 // Response handles structure of response JSON.
@@ -68,7 +70,8 @@ func renderTemplate(w http.ResponseWriter, page Page) {
 
 func main() {
 	http.HandleFunc("/convert", convertHandler)
-	http.ListenAndServe(":8082", nil)
+	fmt.Println("port from main.go: " + os.Getenv("PORT"))
+	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
 }
 
 func convertHandler(w http.ResponseWriter, r *http.Request) {
