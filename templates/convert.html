@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <title>Currency Converter</title>
+    <script src="http://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+        crossorigin="anonymous"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script>
+        $(document).ready(()=>{
+            var from = {{.From }}
+            var to = {{.To }}
+            if (from === "" && to === "") {
+                $("#res,#resDiv").css("display","none");
+            } else if (from === to) {
+                $("#res").text("Currencies cannot be same. Same Currency = same value. No need to use this application.")
+            } else {
+                $("#fromCurrency").val(from)
+                $("#toCurrency").val(to)
+            }
+
+           
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container-fluid">
+    <h1 class="h1. Bootstrap heading">Currency Converter</h1>
+    <form method="POST" action="/convert">
+        <div>
+            <div class="alert alert-primary">
+                <div>
+                    <h5 class="h5. Bootstrap heading">From Currency</h5>
+                </div>
+                <div>
+                    <select name="fromCurrency" id="fromCurrency">
+                        {{range $key, $value := .CurrenciesMap}}
+                        <option value={{$key}}>{{$value}}</option>
+                        {{end}}
+                    </select>
+                </div>
+            </div>
+
+            <div class="alert alert-secondary">
+                <div>
+                    <h5 class="h5. Bootstrap heading">To Currency</h5>
+                </div>
+                <div>
+                    <select name="toCurrency" id="toCurrency">
+                        {{range $key, $value := .CurrenciesMap}}
+                        <option value={{$key}}>{{$value}}</option>
+                        {{end}}
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <input type="submit" class="btn btn-primary" value="Convert">
+            </div><br>
+
+            <div id="resDiv" style="display:block" class="alert alert-success">
+                <div>Conversion Rates:</div>
+                {{if eq 1 1}}
+                {{$from:=index .CurrenciesMap .From}}
+                {{$to:=index .CurrenciesMap .To}}
+                <div id="res">1 {{printf "%s = %f %s" $from .ConversionRate $to}}</div>
+                {{end}}
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+
+</html>
